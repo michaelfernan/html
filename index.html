@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Candidato - Serratec</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        /* Estilos Globais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: #002f6c;
+            color: #fff;
+            overflow-x: hidden;
+            text-align: justify; /* Justificar todos os textos */
+        }
+
+        /* Fundo de partículas */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #005bb5, #002f6c);
+            z-index: -1;
+        }
+
+        /* Cabeçalho */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            display: flex;
+          
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Título do Site */
+        .site-title {
+    
+            color: #00ffff;
+            font-weight: bold;
+            margin-right:  60px;
+        }
+
+        /* Navegação */
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        nav a:hover {
+            color: #00ffff;
+        }
+
+        /* Ícone do Menu (Hambúrguer) */
+        .menu-icon {
+            display: none; /* Esconder o ícone por padrão */
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #00ffff; /* Cor do ícone */
+        }
+
+        /* Seções */
+        main {
+            padding-top: 60px;
+        }
+
+        section {
+            padding: 40px 20px;
+            text-align: justify; /* Justificar o texto das seções */
+            max-width: 900px;
+            margin: auto;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        section h2 {
+            color: #00ffff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center; /* Centralizar títulos */
+        }
+
+        section p {
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        /* Listas sem pontos */
+        ul {
+            list-style-type: none; /* Remover pontos das listas */
+            padding-left: 0; /* Remover padding padrão */
+        }
+
+        ul li {
+            margin-bottom: 10px; /* Espaçamento entre itens da lista */
+        }
+
+        /* Container para alternar GIFs e textos */
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .content-container.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .content-container .texto {
+            flex: 1;
+            text-align: justify; /* Justificar o texto dentro dos cards */
+            background: rgba(0, 47, 108, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.6);
+        }
+
+        .content-container .gif {
+            width: 100%;
+            max-width: 150px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.6);
+            background: transparent; /* Remover fundo dos GIFs */
+        }
+
+        /* Funcionalidades */
+        .funcionalidade-item {
+            margin-bottom: 30px;
+        }
+
+        .funcionalidade-item .description {
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.4;
+            margin-top: 5px;
+        }
+
+        /* Rodapé */
+        footer {
+            background: #001a3c;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #00ffff;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block; /* Mostrar o ícone em telas menores */
+                margin-left: 0px; /* Espaçamento entre o título e o ícone */
+            }
+
+            nav {
+                display: none; /* Esconder os links por padrão em telas menores */
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 10px;
+                position: absolute;
+                top: 50px; /* Posicionar o menu abaixo do título */
+                left: 0;
+                width: 100%;
+            }
+
+            nav.active {
+                display: flex; /* Mostrar os links quando o menu estiver ativo */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fundo Animado -->
+    <div id="particles-js"></div>
+    
+    <!-- Cabeçalho e Navegação -->
+    <header>
+        <div class="site-title">Portal do Candidato</div> <!-- Título do site -->
+        <div class="menu-icon" id="menu-icon">
+
+            <i class="fas fa-bars"></i> <!-- Ícone de menu (hambúrguer) -->
+        </div>
+        <nav id="nav-menu">
+            <a href="#visao">Visão</a>
+            <a href="#objetivo">Objetivo</a>
+            <a href="#funcionalidades">Funcionalidades</a>
+            <a href="#diferenciais">Diferenciais</a>
+            <a href="#tecnologia">Tecnologia</a>
+            <a href="#desenvolvedores">Equipe</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="introducao">
+            <h2 class="texto">Introdução</h2>
+            <div class="content-container">
+                <div class="texto">
+                    <p>
+                        O Portal do Candidato - Serratec é uma plataforma inovadora desenvolvida para simplificar e aprimorar a experiência de candidatura ao programa de Residência do Serratec. Com foco em acessibilidade, segurança e usabilidade, o portal oferece funcionalidades como cadastro intuitivo, acompanhamento em tempo real e suporte via chatbot, garantindo uma jornada fluida e eficiente para os candidatos.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Seções -->
+        <section id="visao">
+            <h2>Visão do Produto</h2>
+            <div class="content-container">
+                <div class="texto">
+                    <p>Uma plataforma inovadora de gestão de candidaturas, oferecendo automação, acessibilidade e suporte
+                        inteligente.</p>
+                </div>
+                <img src="/VisãodoPODUTO.gif" alt="Visão do Produto" class="gif">
+            </div>
+        </section>
+
+        <section id="objetivo">
+            <h2>Objetivo</h2>
+            <div class="content-container reverse">
+                <div class="texto">
+                    <p>Facilitar e aprimorar a jornada dos candidatos, garantindo uma experiência intuitiva e eficiente,
+                        ONDE QUALQUER UM IRÁ CONSEGUIR MEXER, ATÉ MESMO UM GATO.</p>
+                </div>
+                <img src="GATO.gif" alt="Objetivo" class="gif">
+            </div>
+        </section>
+
+        <section id="funcionalidades">
+            <h2>Funcionalidades</h2>
+            <div class="funcionalidade-item">
+                <div class="content-container">
+                    <div class="texto">
+                        <ul>
+                            <li>Inscrição simplificada e segura.</li>
+                            <p class="description">Facilita o processo de candidatura, garantindo que os dados dos usuários
+                                estejam protegidos e o cadastro seja rápido e intuitivo.</p>
+                        </ul>
+                    </div>
+                    <img src="INCRICAO.gif" alt="Inscrição simplificada e segura" class="gif">
+                </div>
+            </div>
+
+            <div class="funcionalidade-item">
+                <div class="content-container reverse">
+                    <div class="texto">
+                        <ul>
+                            <li>Acompanhamento em tempo real.</li>
+                            <p class="description">Permite que os candidatos acompanhem o status de sua candidatura em tempo
+                                real, aumentando a transparência e a confiança no processo.</p>
+                        </ul>
+                    </div>
+                    <img src="TEMPO REAL.gif" alt="Acompanhamento em tempo real" class="gif">
+                </div>
+            </div>
+
+            <div class="funcionalidade-item">
+                <div class="content-container">
+                    <div class="texto">
+                        <ul>
+                            <li>Suporte via chatbot com IA.</li>
+                            <p class="description">Oferece suporte 24/7 através de um chatbot inteligente, resolvendo
+                                dúvidas comuns e agilizando o atendimento aos candidatos.</p>
+                        </ul>
+                    </div>
+                    <img src="CHATBOX.gif" alt="Suporte via chatbot com IA" class="gif">
+                </div>
+            </div>
+
+            <div class="funcionalidade-item">
+                <div class="content-container reverse">
+                    <div class="texto">
+                        <ul>
+                            <li>Notificações via WhatsApp e e-mail.</li>
+                            <p class="description">Mantém os candidatos informados sobre atualizações importantes, como
+                                prazos e resultados, através de notificações instantâneas.</p>
+                        </ul>
+                    </div>
+                    <img src="NOTIFICAÇAO.gif" alt="Notificações via WhatsApp e e-mail" class="gif">
+                </div>
+            </div>
+        </section>
+
+        <section id="diferenciais">
+            <h2>Diferenciais</h2>
+            <div class="content-container reverse">
+                <div class="texto">
+                    <ul>
+                        <li>Plataforma 100% acessível.</li>
+                        <li>Feedback estruturado para candidatos.</li>
+                        <li>Segurança compatível com LGPD.</li>
+                        <li>Dashboard inteligente para gestores.</li>
+                    </ul>
+                </div>
+                <img src="DIFERENCIAIS.gif" alt="Diferenciais" class="gif">
+            </div>
+        </section>
+
+        <section id="tecnologia">
+            <h2>Tecnologia</h2>
+            <div class="content-container">
+                <div class="texto">
+                    <p>Desenvolvido com Next.js no front-end, Java no back-end, banco de dados PostgreSQL e hospedagem em
+                        Vercel/Railway.</p>
+                </div>
+                <img src="IA.gif" alt="Tecnologia" class="gif">
+            </div>
+        </section>
+
+        <section id="desenvolvedores">
+            <h2>Equipe de Desenvolvimento</h2>
+            <div class="content-container reverse">
+                <div class="texto">
+                    <p><strong>Desenvolvedores:</strong> Michael Fernandes, Hebert Pereira, Daniel Lira, Romulo Oliveira,
+                        Pedro Henrique</p>
+                    <p><strong>Orientador:</strong> Jose Teles</p>
+                </div>
+                <img src="FINAL.gif" alt="Equipe" class="gif">
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2025 Portal do Candidato - Serratec. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Animação de Partículas
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 120 },
+                size: { value: 3 },
+                move: { speed: 2 }
+            }
+        });
+
+        // Animação de entrada para as seções
+        document.addEventListener("scroll", function () {
+            document.querySelectorAll("section").forEach(section => {
+                if (section.getBoundingClientRect().top < window.innerHeight - 50) {
+                    gsap.to(section, { opacity: 1, y: 0, duration: 1 });
+                }
+            });
+        });
+
+        // Alternar visibilidade do menu em telas menores
+        const menuIcon = document.getElementById('menu-icon');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuIcon.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>
